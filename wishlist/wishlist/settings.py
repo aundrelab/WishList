@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dbapp.apps.DbappConfig',
+    'rest_framework',
+    'wishlistapp'
 ]
 
 MIDDLEWARE = [
