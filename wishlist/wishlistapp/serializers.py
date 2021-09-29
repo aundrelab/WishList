@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from rest_framework import serializers
 from . models import User
 
@@ -14,3 +15,5 @@ class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['']
+=======
+>>>>>>> dff28fb8b5672151f002992fc3693d48c338dfa8
