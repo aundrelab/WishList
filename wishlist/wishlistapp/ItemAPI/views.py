@@ -1,10 +1,21 @@
-from ..models import Item
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
-def update_item(item_id, title, description, category, image_url, item_url):
-    item = Item.objects.get(item_id)
-    item.title = title;
-    item.description = description
-    item.category = category
-    item.imageURL = image_url
-    item.itemURL = item_url
-    item.save()
+from ..models import Item
+from .serializer import ItemSerializer
+
+@api_view(['PUT',])
+def update(request, slug):
+    try:
+        item = Item.objects.get(slug=slug)
+    except Item.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "GET":
+        serializer = ItemSerializer(item)
+        data = {}
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+            return Response(data=data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

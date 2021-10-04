@@ -18,5 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     # path('admin/', include('adminapp.urls')),
-    path('wishlist/', include('wishlistapp.urls'))
+    path('wishlist/', include('wishlistapp.urls')),
+    path('admin/', admin.site.urls),
+
+    # REST FRAMEWORK ITEM URLS
+    path('wishlist/update/', include('wishlistapp.urls')),
 ]
