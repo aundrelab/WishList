@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from . serializers import CreateAccountSerializer
 from rest_framework.authtoken.models import Token
+from . models import User
 
 # Create your views here.
 def home(request):
@@ -21,14 +22,17 @@ def createaccount_view(request):
     data = {}
     if serializer.is_valid():
         user = serializer.save()
-        data['response'] = 'successfully registered a new user'
+        if User.objects.filter(username=user.username).exists():
+            return Response({'username':'username already exists'})
+        data['response'] = 'successfully created account'
         data['userId'] = user.userId
         data['name'] = user.name
         data['username'] = user.username
-        data['password'] = user.password
-        token = Token.objects.get(user=user).key
-        data['token'] = token
-    else:
-        data = serializer.errors
 
     return Response(data)
+#
+# @api_view(['POST',])
+# def login_view(request):
+#     serializer = LoginSerializer(data=request.data)
+#     data = {}
+#     if serializer.is_valid():
