@@ -15,6 +15,7 @@ def home(request):
     return render(request, 'home.html');
 
 def login(request):
+    print(request.GET);
     return render(request, 'login.html');
 
 def signup(request):

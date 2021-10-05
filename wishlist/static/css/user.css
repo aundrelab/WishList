@@ -12,6 +12,11 @@ header p {
   font-size: 24px;
 }
 
+.input {
+  margin: auto;
+  width: 21%;
+}
+
 .main {
   position: fixed;
   top: 50%;
@@ -20,10 +25,15 @@ header p {
   transform: translate(-50%, -50%);
 }
 
-main div {
-  margin-top: 25px;
+button {
+  text-decoration: none;
+  border: 0px;
+  padding: 0px;
 }
 
+main, main div {
+  margin-top: 15px;
+}
 
 #login, #signup {
   margin: 5px 100px;
