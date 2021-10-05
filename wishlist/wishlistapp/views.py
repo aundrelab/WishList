@@ -9,6 +9,7 @@ from . serializers import CreateAccountSerializer
 from rest_framework.authtoken.models import Token
 from . models import User
 
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html');
