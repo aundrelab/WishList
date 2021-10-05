@@ -39,8 +39,8 @@ main, main div {
   margin-top: 15px;
 }
 
-#login, #signup {
-  margin: 5px 100px;
+#login, #signup, #home {
+  margin: 20px 45px;
   padding: 15px;
   border: 5px solid #F3F1F5;
   height: 90px;
@@ -55,7 +55,7 @@ main, main div {
   color: #F3F1F5;
 }
 
-#login:hover, #signup:hover {
+#login:hover, #signup:hover, #home:hover {
   background-color: #F3F1F5;
   color:#BFA2DB;
 }

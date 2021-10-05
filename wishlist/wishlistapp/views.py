@@ -19,6 +19,7 @@ def login(request):
     return render(request, 'login.html');
 
 def signup(request):
+    print(request.POST);
     return render(request, 'signup.html');
 
 def about(request):
