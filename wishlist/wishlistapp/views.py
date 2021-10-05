@@ -38,6 +38,10 @@ def createaccount_view(request):
         data['username'] = user.username
 
     return Response(data)
+
+def updateAccount(request):
+    return render(request, 'profileUpdate.html');
+
 #
 # @api_view(['POST',])
 # def login_view(request):
