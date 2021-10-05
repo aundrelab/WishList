@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Home</title>
+<!--    <link href="style.css" rel="stylesheet" type="text/css" />-->
+      <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+    crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,200;0,300;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Font-Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <header>
+        <div class="container text-center p-5">
+          <h1>WishList</h1>
+          <p>What's on your wishlist? Let people know what gifts you'd like. Save time. Add your items and ideas in one convenient location.</p>
+        </div>
+      </header>
+
+      <main>
+        <div class="container d-flex text-center justify-content-center">
+          <div>
+            <h2>Login</h2>
+            <a href="login.html">
+              <div id="login">
+                <i class="fa fa-sign-in fa-4x" aria-hidden="true"></i>
+              </div>
+            </a>
+          </div>
+          <div>
+            <h2>Sign Up</h2>
+            <a href="signup.html">
+              <div id="signup">
+                <i class="fa fa-user-plus fa-4x" aria-hidden="true"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      $(function(){
+        $('#login').hover(function() {
+          $('.fa-sign-in').css("backgroundColor", "#F3F1F5");
+          $('.fa-sign-in').css("color", "#BFA2DB");
+        }, function() {
+          $('.fa-sign-in').css("backgroundColor", "#BFA2DB");
+          $('.fa-sign-in').css("color", "#F3F1F5");
+        })
+      })
+
+      $(function(){
+        $('#signup').hover(function() {
+          $('.fa-user-plus').css("backgroundColor", "#F3F1F5");
+          $('.fa-user-plus').css("color", "#BFA2DB");
+        }, function() {
+          $('.fa-user-plus').css("backgroundColor", "#BFA2DB");
+          $('.fa-user-plus').css("color", "#F3F1F5");
+        })
+      })
+    </script>
+  </body>
+</html>
