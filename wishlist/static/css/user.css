@@ -17,6 +17,10 @@ header p {
   width: 21%;
 }
 
+input {
+  padding: 4px;
+}
+
 .main {
   position: fixed;
   top: 50%;
