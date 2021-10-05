@@ -14,6 +14,12 @@ from . models import User
 def home(request):
     return render(request, 'home.html');
 
+def login(request):
+    return render(request, 'login.html');
+
+def signup(request):
+    return render(request, 'signup.html');
+
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
