@@ -61,5 +61,16 @@ def login_view(request):
         data = serializer.errors
     return Response(data)
 
+@api_view(['POST',])
+def logout_view(request):
+    serializer = LogoutSerializer(data=request.data)
+    data = {}
+    if serializer.is_valid():
+        del request.session['username']
+        del request.session['password']
+        data['success'] = 'successfully logged out user'
+    else:
+        data = serializer.errors
+    return Response(data)
 
 
