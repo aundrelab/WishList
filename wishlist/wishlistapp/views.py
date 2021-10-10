@@ -11,9 +11,18 @@ from . serializers import LoginSerializer
 from rest_framework.authtoken.models import Token
 from . models import User
 
+
 # Create your views here.
 def home(request):
-    return HttpResponse('<h1>Home of App</h1>');
+    return render(request, 'home.html');
+
+def login(request):
+    print(request.GET);
+    return render(request, 'login.html');
+
+def signup(request):
+    print(request.POST);
+    return render(request, 'signup.html');
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')

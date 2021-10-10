@@ -19,7 +19,4 @@ from django.urls import path, include
 urlpatterns = [
     path('wishlist/', include('wishlistapp.urls')),
     path('admin/', admin.site.urls),
-
-    # REST FRAMEWORK ITEM URLS
-    path('wishlist/update/', include('wishlistapp.urls')),
 ]
