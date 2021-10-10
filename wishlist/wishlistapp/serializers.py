@@ -45,5 +45,20 @@ class LoginSerializer(serializers.ModelSerializer):
         }
 
     def check(self):
-        print(self.validated_data)
+        if self.username_exists(self.validated_data['username']):
+            print('some')
+            user = User.objects.get(username=self.validated_data['username'])
+            if user.password != self.validated_data['password']:
+                raise serializers.ValidationError({'failure': 'incorrect password'})
+                return False
+        else:
+            raise serializers.ValidationError({'failure': 'username does not exist'})
+            return False
+
         return True
+
+    def username_exists(self, username):
+        if User.objects.filter(username=username).exists():
+            return True
+
+        return False

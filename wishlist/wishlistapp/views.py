@@ -41,12 +41,13 @@ def login_view(request):
     serializer = LoginSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
+        print('something')
         if serializer.check():
             request.session['username'] = request.data['username']
             request.session['password'] = request.data['password']
-            data['response'] = 'successfully logged in'
+            data['success'] = 'successfully logged in'
         else:
-            data = {'response': 'unsuccessful'}
+            data = serializer.errors
     else:
         data = serializer.errors
     return Response(data)
