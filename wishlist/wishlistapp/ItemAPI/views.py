@@ -6,39 +6,6 @@ from ..models import Item
 from ..models import List
 from .serializer import ItemSerializer
 
-<<<<<<< HEAD
-# @api_view(['PUT',])
-# def update(request, slug):
-#     try:
-#         item = Item.objects.get(slug=slug)
-#     except Item.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     if request.method == "GET":
-#         serializer = ItemSerializer(item)
-#         data = {}
-#         if serializer.is_valid():
-#             serializer.save()
-#             data["success"] = "update successful"
-#             return Response(data=data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['DELETE',])
-# def update(request, slug):
-#     try:
-#         item = Item.objects.get(slug=slug)
-#     except Item.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     if request.method == "DELETE":
-#         operation = item.delete()
-#         data = {}
-#         if operation:
-#             data["success"] = "update successful"
-#         else:
-#             data["failure"] = "delete failed"
-#         return Response(data=data)
-=======
 @api_view(['PUT', 'GET'])
 def update(request, itemId):
     try:
@@ -70,7 +37,6 @@ def delete(request, itemId):
         else:
             data["failure"] = "delete failed"
         return Response(data=data)
->>>>>>> 915a386f78e8841cb3874e438cc440aa940ebd5f
 
 @api_view(['POST', 'GET'])
 def create(request):
