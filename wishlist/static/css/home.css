@@ -1,7 +1,10 @@
+{% load static%}
+
 * {
-  background-color: #BFA2DB;
-  color: #F3F1F5;
+  color: #FCDEC0;
   font-family: 'Bitter', serif;
+  background-image: url('images/gift.jpg');
+  background-color: #7D5A50;
 }
 
 header h1 {
@@ -39,14 +42,4 @@ main div {
   -moz-border-radius:50%;
   -webkit-border-radius:50%;
   width: 120px;
-}
-
-.fa {
-  background-color: #BFA2DB;
-  color: #F3F1F5;
-}
-
-#login:hover, #signup:hover {
-  background-color: #F3F1F5;
-  color:#BFA2DB;
 }
