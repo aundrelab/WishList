@@ -6,7 +6,6 @@ from ..models import Item
 from ..models import List
 from .serializer import ItemSerializer
 
-<<<<<<< HEAD
 # @api_view(['PUT',])
 # def update(request, slug):
 #     try:
@@ -38,7 +37,6 @@ from .serializer import ItemSerializer
 #         else:
 #             data["failure"] = "delete failed"
 #         return Response(data=data)
-=======
 @api_view(['PUT', 'GET'])
 def update(request, itemId):
     try:
@@ -70,7 +68,6 @@ def delete(request, itemId):
         else:
             data["failure"] = "delete failed"
         return Response(data=data)
->>>>>>> 915a386f78e8841cb3874e438cc440aa940ebd5f
 
 @api_view(['POST', 'GET'])
 def create(request):
