@@ -7,9 +7,11 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from . serializers import CreateAccountSerializer
 from . serializers import LoginSerializer
+from . serializers import LogoutSerializer
 
 from rest_framework.authtoken.models import Token
 from . models import User
+import json
 
 
 # Create your views here.
@@ -24,6 +26,9 @@ def signup(request):
     print(request.POST);
     return render(request, 'signup.html');
 
+def newItem(request):
+    return render(request, 'newItem.html');
+
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
@@ -34,10 +39,7 @@ def createaccount_view(request):
     data = {}
     if serializer.is_valid():
         user = serializer.save()
-        # if User.objects.filter(username=user.username).exists():
-        #     return Response({'username':'username already exists'})
         data['response'] = 'successfully created account'
-        data['userId'] = user.userId
         data['name'] = user.name
         data['username'] = user.username
     else:
@@ -52,6 +54,8 @@ def login_view(request):
     if serializer.is_valid():
         print('something')
         if serializer.check():
+            user = User.objects.get(username=request.data['username'])
+            request.session['userId'] = user.userId
             request.session['username'] = request.data['username']
             request.session['password'] = request.data['password']
             data['success'] = 'successfully logged in'
@@ -74,3 +78,27 @@ def logout_view(request):
     return Response(data)
 
 
+@api_view(['GET'])
+def admin_get_all_users(request):
+    if request.method == 'GET':
+        user = User.objects.all()
+        serializer = CreateAccountSerializer(user, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+
+@api_view(['PUT', 'GET'])
+def updateUser(request, userId):
+    try:
+        item = User.objects.get(userId=userId)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "PUT":
+        serializer = CreateAccountSerializer(item)
+        data = {}
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+            return Response(data=data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

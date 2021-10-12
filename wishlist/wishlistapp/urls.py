@@ -7,8 +7,13 @@ urlpatterns = [
     path('home', views.home, name='app-home'),
     path('login', views.login, name='app-login'),
     path('signup', views.signup, name='app-signup'),
+    path('newItem', views.newItem, name='app-newItem'),
     path('about/', views.about, name='app-about'),
 
+    path('getAllUsers/', views.admin_get_all_users, name='getAllUsers'),
+
+
+    path('<userId>/update-user/', views.updateUser, name="updateUser"),
     path('<itemId>/update-item/', item_views.update, name="update"),
     path('<itemId>/delete-item/', item_views.delete, name="delete"),
     path('create-item/', item_views.create, name="create"),
