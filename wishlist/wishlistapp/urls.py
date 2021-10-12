@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views as views
 from .ItemAPI import views as item_views
+from .ListAPI import views as list_views
 
 urlpatterns = [
     path('home', views.home, name='app-home'),
@@ -8,9 +9,11 @@ urlpatterns = [
     path('signup', views.signup, name='app-signup'),
     path('about/', views.about, name='app-about'),
 
-    path('<itemId>/update/', item_views.update, name="update"),
-    path('<itemId>/delete/', item_views.delete, name="delete"),
-    path('create/', item_views.create, name="create"),
+    path('<itemId>/update-item/', item_views.update, name="update"),
+    path('<itemId>/delete-item/', item_views.delete, name="delete"),
+    path('create-item/', item_views.create, name="create"),
+
+    path('create-list/', list_views.create, name="create"),
 
     path('createaccount/', views.createaccount_view, name='app-createaccount'),
     path('login/', views.login_view, name='app-login'),
