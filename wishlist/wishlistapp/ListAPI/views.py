@@ -8,7 +8,8 @@ from .serializer import ListSerializer
 
 @api_view(['POST', 'GET'])
 def create(request):
-    user_of_list = User.objects.get(userId=request.user.userId)
+    user_of_list = User.objects.get(userId=request.session['userId'])
+    # user_of_list = User.objects.get(userId=request.user.userId)
     list = List(user=user_of_list)
 
     if request.method == "POST":
