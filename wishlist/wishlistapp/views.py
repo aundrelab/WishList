@@ -7,9 +7,11 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from . serializers import CreateAccountSerializer
 from . serializers import LoginSerializer
+from . serializers import LogoutSerializer
 
 from rest_framework.authtoken.models import Token
 from . models import User
+import json
 
 
 # Create your views here.
@@ -74,3 +76,11 @@ def logout_view(request):
     return Response(data)
 
 
+@api_view(['GET'])
+def admin_get_all_users(request):
+    if request.method == 'GET':
+        user = User.objects.all()
+        serializer = CreateAccountSerializer(user, many=True)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
