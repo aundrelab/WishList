@@ -25,6 +25,9 @@ def signup(request):
 def newItem(request):
     return render(request, 'newItem.html');
 
+def newList(request):
+    return render(request, 'newList.html');
+
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
