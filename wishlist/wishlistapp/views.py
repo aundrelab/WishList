@@ -54,6 +54,8 @@ def login_view(request):
     if serializer.is_valid():
         print('something')
         if serializer.check():
+            user = User.objects.get(username=request.data['username'])
+            request.session['userId'] = user.userId
             request.session['username'] = request.data['username']
             request.session['password'] = request.data['password']
             data['success'] = 'successfully logged in'
