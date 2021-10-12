@@ -42,10 +42,7 @@ def createaccount_view(request):
     data = {}
     if serializer.is_valid():
         user = serializer.save()
-        # if User.objects.filter(username=user.username).exists():
-        #     return Response({'username':'username already exists'})
         data['response'] = 'successfully created account'
-        data['userId'] = user.userId
         data['name'] = user.name
         data['username'] = user.username
     else:
