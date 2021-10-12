@@ -11,6 +11,9 @@ class User(models.Model):
     username = models.CharField('Username', max_length=60)
     password = models.CharField('Password', max_length=60)
 
+    def set_username(self, username):
+        self.username = username
+
 class List(models.Model):
     listId = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
