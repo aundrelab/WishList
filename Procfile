@@ -1,1 +1,1 @@
-web: gunicorn WishListApp.wsgi
+web: gunicorn wishlist.wsgi
