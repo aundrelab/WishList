@@ -30,9 +30,19 @@ def createaccount_view(request):
         data['username'] = user.username
 
     return Response(data)
-#
-# @api_view(['POST',])
-# def login_view(request):
-#     serializer = LoginSerializer(data=request.data)
-#     data = {}
-#     if serializer.is_valid():
+
+@api_view(['DELETE',])
+def deleteaccount_view(request):
+    try:
+        user = User.objects.get(username=request.data['username'])
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    operation = user.delete()
+    data = {}
+    if operation:
+        data['success'] = 'successfully deleted user'
+    else:
+        data['failure'] = 'failed to delete user'
+
+    return Response(data=data)
