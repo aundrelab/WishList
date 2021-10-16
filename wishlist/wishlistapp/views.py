@@ -22,17 +22,11 @@ def createaccount_view(request):
     data = {}
     if serializer.is_valid():
         user = serializer.save()
-        if User.objects.filter(username=user.username).exists():
-            return Response({'username':'username already exists'})
         data['response'] = 'successfully created account'
-        data['userId'] = user.userId
-        data['name'] = user.name
         data['username'] = user.username
 
+    else:
+        data = serializer.errors
+
     return Response(data)
-#
-# @api_view(['POST',])
-# def login_view(request):
-#     serializer = LoginSerializer(data=request.data)
-#     data = {}
-#     if serializer.is_valid():
+
