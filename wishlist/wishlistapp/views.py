@@ -32,7 +32,7 @@ def newItem(request):
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
-@api_view(['PUT',])
+@api_view(['POST',])
 def createaccount_view(request):
     # check request data
     serializer = CreateAccountSerializer(data=request.data)
@@ -40,7 +40,7 @@ def createaccount_view(request):
     if serializer.is_valid():
         user = serializer.save()
         data['response'] = 'successfully created account'
-        data['name'] = user.name
+       
         data['username'] = user.username
     else:
         data = serializer.errors
@@ -52,7 +52,6 @@ def login_view(request):
     serializer = LoginSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
-        print('something')
         if serializer.check():
             user = User.objects.get(username=request.data['username'])
             request.session['userId'] = user.userId
@@ -65,11 +64,13 @@ def login_view(request):
         data = serializer.errors
     return Response(data)
 
+
 @api_view(['POST',])
 def logout_view(request):
     serializer = LogoutSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
+        del request.session['userId']
         del request.session['username']
         del request.session['password']
         data['success'] = 'successfully logged out user'
