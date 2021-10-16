@@ -78,6 +78,23 @@ def logout_view(request):
     return Response(data)
 
 
+@api_view(['DELETE',])
+def deleteaccount_view(request):
+    try:
+        user = User.objects.get(username=request.data['username'])
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    operation = user.delete()
+    data = {}
+    if operation:
+        data['success'] = 'successfully deleted user'
+    else:
+        data['failure'] = 'failed to delete user'
+
+    return Response(data=data)
+
+
 @api_view(['GET'])
 def admin_get_all_users(request):
     if request.method == 'GET':
@@ -102,3 +119,4 @@ def updateUser(request, userId):
             data["success"] = "update successful"
             return Response(data=data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
