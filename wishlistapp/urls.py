@@ -15,8 +15,10 @@ urlpatterns = [
 
 
     path('<userId>/update-user/', views.updateUser, name="updateUser"),
+
     path('<itemId>/update-item/', item_views.update, name="update"),
     path('<itemId>/delete-item/', item_views.delete, name="delete"),
+    path('<listId>/get-items/', item_views.getItemsofList, name="get"),
     path('create-item/', item_views.create, name="create"),
 
     path('create-list/', list_views.create, name="create"),
