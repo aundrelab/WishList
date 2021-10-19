@@ -124,3 +124,20 @@ def updateUser(request, userId):
             return Response(data=data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['DELETE', 'GET'])
+def deleteUser(request, userId):
+    try:
+        user = User.objects.get(userId=userId)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "DELETE":
+        operation = user.delete()
+        data = {}
+        if operation:
+            data["success"] = "delete successful"
+        else:
+            data["failure"] = "delete failed"
+        return Response(data=data)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)
