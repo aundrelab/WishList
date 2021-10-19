@@ -8,6 +8,7 @@ from rest_framework import status
 from . serializers import CreateAccountSerializer
 from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
+from . serializers import UserSerializer
 
 from rest_framework.authtoken.models import Token
 from . models import User
@@ -43,7 +44,7 @@ def createaccount_view(request):
     if serializer.is_valid():
         user = serializer.save()
         data['response'] = 'successfully created account'
-       
+
         data['username'] = user.username
     else:
         data = serializer.errors
@@ -103,25 +104,29 @@ def deleteaccount_view(request):
 def admin_get_all_users(request):
     if request.method == 'GET':
         user = User.objects.all()
-        serializer = CreateAccountSerializer(user, many=True)
+        serializer = UserSerializer(user, many=True)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
         return Response(serializer.data)
 
-@api_view(['PUT', 'GET'])
+@api_view(['GET', 'PATCH'])
 def updateUser(request, userId):
-    try:
-        item = User.objects.get(userId=userId)
-    except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == "PUT":
-        serializer = CreateAccountSerializer(item)
+    if request.method == 'GET':
+        user = User.objects.get(userId=userId)
+        print(user)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+    elif request.method == 'PATCH':
+        user = User.objects.get(userId=userId)
+        serializer = UserSerializer(user, data=request.data)
         data = {}
         if serializer.is_valid():
             serializer.save()
             data["success"] = "update successful"
-            return Response(data=data)
+            return Response(data=data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE', 'GET'])
