@@ -104,7 +104,7 @@ def deleteaccount_view(request):
 def admin_get_all_users(request):
     if request.method == 'GET':
         user = User.objects.all()
-        serializer = CreateAccountSerializer(user, many=True)
+        serializer = UserSerializer(user, many=True)
         json_obj = json.dumps(serializer.data)
         print(json_obj)
         return Response(serializer.data)
