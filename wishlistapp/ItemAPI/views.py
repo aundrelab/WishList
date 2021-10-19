@@ -7,44 +7,47 @@ from ..models import Item
 from ..models import List
 from .serializer import ItemSerializer
 
-@api_view(['PUT', 'GET'])
+@api_view(['PATCH', 'GET'])
 def update(request, itemId):
-    try:
+    if request.method == 'GET':
         item = Item.objects.get(itemId=itemId)
-    except Item.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ItemSerializer(item, many=False)
+        return Response(serializer.data)
 
-    if request.method == "PUT":
-        serializer = ItemSerializer(item)
-        data = {}
+    if request.method == "PATCH":
+        item = Item.objects.get(itemId=itemId)
+        serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            data["success"] = "update successful"
-            return Response(data=data)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE', 'GET'])
 def delete(request, itemId):
-    try:
+    if request.method == 'GET':
         item = Item.objects.get(itemId=itemId)
-    except Item.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ItemSerializer(item, many=False)
+        return Response(serializer.data)
 
     if request.method == "DELETE":
-        operation = item.delete()
-        data = {}
-        if operation:
-            data["success"] = "update successful"
-        else:
-            data["failure"] = "delete failed"
-        return Response(data=data)
+        item = Item.objects.get(itemId=itemId)
+        item.delete()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+## pass list id to create so item has a list associated to it
 @api_view(['POST', 'GET'])
-def create(request):
-    list_of_item = List.objects.get(listId=request.list.listId)
-    item = Item(list=list_of_item)
+def create(request, listId):
+    if request.method == 'GET':
+        list_of_item = List.objects.get(listId=listId)
+        item = Item(list=list_of_item)
+        serializer = ItemSerializer(item, many=False)
+        return Response(serializer.data)
 
     if request.method == "POST":
+        list_of_item = List.objects.get(listId=listId)
+        item = Item(list=list_of_item)
         serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()

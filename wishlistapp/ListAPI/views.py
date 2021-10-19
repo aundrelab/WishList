@@ -7,11 +7,16 @@ from ..models import User
 from .serializer import ListSerializer
 
 @api_view(['POST', 'GET'])
-def create(request):
-    user_of_list = User.objects.get(userId=request.user.userId)
-    list = List(user=user_of_list)
+def create(request, userId):
+    if request.method == 'GET':
+        user_of_list = User.objects.get(userId=userId)
+        list = List(user=user_of_list)
+        serializer = ListSerializer(list, many=False)
+        return Response(serializer.data)
 
     if request.method == "POST":
+        user_of_list = User.objects.get(userId=userId)
+        list = List(user=user_of_list)
         serializer = ListSerializer(list, data=request.data)
         if serializer.is_valid():
             serializer.save()
