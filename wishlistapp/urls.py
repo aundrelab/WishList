@@ -11,10 +11,10 @@ urlpatterns = [
     path('newList', views.newList, name='app-newList'),
     path('about/', views.about, name='app-about'),
 
+    # Admin features
     path('getAllUsers/', views.admin_get_all_users, name='getAllUsers'),
-
-
     path('<userId>/update-user/', views.updateUser, name="updateUser"),
+    path('<userId>/delete-user/', views.deleteUser, name="deleteUser"),
 
     path('<itemId>/update-item/', item_views.update, name="update"),
     path('<itemId>/delete-item/', item_views.delete, name="delete"),
