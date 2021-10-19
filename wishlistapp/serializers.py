@@ -5,7 +5,7 @@ class CreateAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['userId', 'name', 'username', 'password']
+        fields = ['name', 'username', 'password']
 
         extra_kwargs = {
             'password': {'write_only': True}
@@ -22,18 +22,21 @@ class CreateAccountSerializer(serializers.ModelSerializer):
             name=self.validated_data['name'],
             password=self.validated_data['password'],
         )
-
         username = self.validated_data['username']
 
         if username_exists(username):
             raise serializers.ValidationError({'username': 'username already exists'})
-
-        if not username:
-            raise serializers.ValidationError({'username': 'username cannot be blank'})
-
         user.set_username(username)
         user.save()
         return user
+
+
+
+class DeleteAccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['username']
 
 class LoginSerializer(serializers.ModelSerializer):
 
@@ -47,7 +50,6 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def check(self):
         if self.username_exists(self.validated_data['username']):
-            print('some')
             user = User.objects.get(username=self.validated_data['username'])
             if user.password != self.validated_data['password']:
                 raise serializers.ValidationError({'failure': 'incorrect password'})

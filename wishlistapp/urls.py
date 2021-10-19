@@ -22,6 +22,8 @@ urlpatterns = [
     path('create-list/', list_views.create, name="create"),
 
     path('createaccount/', views.createaccount_view, name='app-createaccount'),
+
+    path('deleteaccount/', views.deleteaccount_view, name='app-deleteaccount'),
     path('login/', views.login_view, name='app-login'),
     path('logout/', views.logout_view, name='app-logout'),
 ]
