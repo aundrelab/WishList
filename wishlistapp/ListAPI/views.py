@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+import json
 
 from ..models import List
 from ..models import User
@@ -22,3 +23,12 @@ def create(request, userId):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getListsOfUser(request, userId):
+    if request.method == 'GET':
+        user = User.objects.get(userId=userId)
+        lists = List.objects.filter(user=user)
+        serializer = ListSerializer(lists, many=True)
+        json1 = json.loads(json.dumps(serializer.data))
+        return Response(json1)
