@@ -111,6 +111,11 @@ def admin_get_all_users(request):
 
 @api_view(['GET', 'PATCH'])
 def updateUser(request, userId):
+    try:
+        user = User.objects.get(userId=userId)
+        print(user)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         user = User.objects.get(userId=userId)
@@ -133,10 +138,18 @@ def updateUser(request, userId):
 def deleteUser(request, userId):
     try:
         user = User.objects.get(userId=userId)
+        print(user)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == "DELETE":
+    if request.method == 'GET':
+        user = User.objects.get(userId=userId)
+        print(user)
+        serializer = UserSerializer(user, many=False)
+        json_obj = json.dumps(serializer.data)
+        print(json_obj)
+        return Response(serializer.data)
+    elif request.method == "DELETE":
         operation = user.delete()
         data = {}
         if operation:
@@ -144,5 +157,3 @@ def deleteUser(request, userId):
         else:
             data["failure"] = "delete failed"
         return Response(data=data)
-
-    return Response(status=status.HTTP_400_BAD_REQUEST)
