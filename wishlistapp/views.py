@@ -22,15 +22,11 @@ def home(request):
 
 def login(request):
     if request.method == "POST":
-        print('inside login')
         req = request.POST
-        print(req)
         url = 'http://127.0.0.1:8000/loginendpoint/'
         myobj = {'username': req['username'], 'password': req['password']}
-        print(req['username'])
         x = requests.post(url, data=myobj)
         response_data = x.json()
-        print(response_data)
         if 'success' in response_data:
             return render(request, 'home.html')
 
@@ -43,7 +39,6 @@ def signup(request):
         myobj = {'name': req['name'], 'username': req['username'], 'password': req['password']}
         x = requests.post(url, data=myobj)
         response_data = x.json()
-        print(response_data)
 
         if 'response' in response_data:
             return render(request, 'login.html')
