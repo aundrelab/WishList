@@ -34,6 +34,9 @@ def newItem(request):
 def newList(request):
     return render(request, 'newList.html');
 
+def editItem(request):
+    return render(request, 'editItem.html');
+
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
