@@ -20,7 +20,8 @@ def home(request):
     return render(request, 'home.html');
 
 def login(request):
-    print(request.GET);
+    if request.method == "POST":
+        print(request.GET);
     return render(request, 'login.html');
 
 def signup(request):
