@@ -7,6 +7,9 @@
 <body>
     <form method='POST' action=".">{% csrf_token %}
           <div class="input">
+              <h4>Name</h4>
+            <input type="text" name="name" value="{{user.name}}">
+            <br><br>
             <h4>Username</h4>
             <input type="text" name="username" value="{{user.username}}">
             <br><br>
@@ -16,9 +19,6 @@
           <div class="container d-flex text-center justify-content-center">
             <div id="home">
               <a href="/"><i class="fa fa-angle-double-left fa-3x" aria-hidden="true"></i></a>
-            </div>
-            <div id="login">
-              <button type="submit"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></button>
             </div>
           </div>
 

@@ -118,34 +118,29 @@ def admin_get_all_users(request):
     if request.method == 'GET':
         user = User.objects.all()
         serializer = UserSerializer(user, many=True)
-        json_obj = json.dumps(serializer.data)
-        print(json_obj)
         return Response(serializer.data)
 
-@api_view(['GET', 'PATCH'])
+@api_view(['GET', 'POST'])
 def updateUser(request, userId):
+    # validate admin *WIP*
     try:
         user = User.objects.get(userId=userId)
-        print(user)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        user = User.objects.get(userId=userId)
-        print(user)
-        serializer = UserSerializer(user, many=False)
-        json_obj = json.dumps(serializer.data)
-        print(json_obj)
-        return Response(serializer.data)
-    elif request.method == 'PATCH':
-        user = User.objects.get(userId=userId)
-        serializer = UserSerializer(user, data=request.data)
+        context = {
+            "user": user
+        }
+        return render(request, "userUpdate.html", context)
+    elif request.method == 'POST':
+        user = User.objects.get(username=user.username)
+        serializer = CreateAccountSerializer(user, data=request.data)
         data = {}
         if serializer.is_valid():
             serializer.save()
             data["success"] = "update successful"
-            return Response(data=data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return redirect('../..')
 
 @api_view(['POST', 'GET'])
 def deleteUser(request, userId):
