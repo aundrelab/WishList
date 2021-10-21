@@ -28,6 +28,9 @@ def signup(request):
     print(request.POST);
     return render(request, 'signup.html');
 
+def dashboard(request):
+    return render(request, 'dashboard.html');
+
 def newItem(request):
     return render(request, 'newItem.html');
 
