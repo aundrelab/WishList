@@ -9,6 +9,9 @@ from . serializers import CreateAccountSerializer
 from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
 from . serializers import UserSerializer
+from .models import List,User,Item
+from .ListAPI.serializer import ListSerializer
+from .ItemAPI.serializer import ItemSerializer
 
 from rest_framework.authtoken.models import Token
 from . models import User
@@ -29,7 +32,22 @@ def signup(request):
     return render(request, 'signup.html');
 
 def dashboard(request):
-    return render(request, 'dashboard.html');
+    user = User.objects.get(userId=request.session['userId'])
+    lists = List.objects.filter(user=user)
+    serializer = ListSerializer(lists, many=True)
+    json_lists = json.loads(json.dumps(serializer.data))
+
+    json_items_of_list = []
+    for list in json_lists:
+        id = list.listId
+        list = List.objects.get(listId=id)
+        items = Item.objects.filter(list=list)
+        serializer = ItemSerializer(items, many=True)
+        json_items = json.loads(json.dumps(serializer.data))
+        json_items_of_list.append(items)
+
+    print()
+    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
 
 def newItem(request):
     return render(request, 'newItem.html');
