@@ -26,8 +26,8 @@ class Item(models.Model):
     title = models.CharField('Title', max_length=60)
     description = models.CharField('Description', max_length=200)
     category = models.CharField('Category', max_length=60)
-    imageURL = models.URLField('Image URL', max_length=500)
-    itemURL = models.URLField('Item URL', max_length=500)
+    imageURL = models.URLField('Image URL')
+    itemURL = models.URLField('Item URL')
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
