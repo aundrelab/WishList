@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
@@ -13,6 +13,7 @@ from . serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from . models import User
 import json
+import requests
 
 
 # Create your views here.
@@ -32,6 +33,18 @@ def newItem(request):
 
 def newList(request):
     return render(request, 'newList.html');
+
+def adminHome(request):
+    #validaite admin *WIP*
+    return render(request, 'adminHome.html');
+
+def adminUsers(request):
+    # Validate admin *WIP*
+    response = requests.get('http://127.0.0.1:8000/getAllUsers/').json();
+    # pass in users
+    my_users = response;
+    return render(request, 'userList.html', {'users': my_users});
+
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
@@ -134,26 +147,20 @@ def updateUser(request, userId):
             return Response(data=data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['DELETE', 'GET'])
+@api_view(['POST', 'GET'])
 def deleteUser(request, userId):
+    # validate admin *WIP*
     try:
         user = User.objects.get(userId=userId)
         print(user)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        user = User.objects.get(userId=userId)
-        print(user)
-        serializer = UserSerializer(user, many=False)
-        json_obj = json.dumps(serializer.data)
-        print(json_obj)
-        return Response(serializer.data)
-    elif request.method == "DELETE":
-        operation = user.delete()
-        data = {}
-        if operation:
-            data["success"] = "delete successful"
-        else:
-            data["failure"] = "delete failed"
-        return Response(data=data)
+    if (request.method == "GET"):
+        context = {
+            "user": user
+        }
+        return render(request, "userDelete.html", context)
+    elif(request.method == "POST"): # Post method for when you delete the user
+        user.delete()
+        return redirect('../../')

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> User Update </title>
+</head>
+<body>
+    <form method='POST' action=".">{% csrf_token %}
+          <div class="input">
+            <h4>Username</h4>
+            <input type="text" name="username" value="{{user.username}}">
+            <br><br>
+            <h4>Password</h4>
+            <input type="password" name="password" value="{{user.password}}">
+          </div>
+          <div class="container d-flex text-center justify-content-center">
+            <div id="home">
+              <a href="/"><i class="fa fa-angle-double-left fa-3x" aria-hidden="true"></i></a>
+            </div>
+            <div id="login">
+              <button type="submit"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+        <p><input type='submit' value='Update'/> <a href="../../"> Back </a> </p>
+    </form>
+
+</body>
+</html>

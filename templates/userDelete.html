@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm User Deletion</title>
+</head>
+<body>
+    <form method='POST' action=".">{% csrf_token %}
+        <h1>Do you want to delete "{{user.username}}"?</h1>
+        <p><input type='submit' value='Yes'/> <a href="../../"> Cancel </a> </p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <h1> Users </h1>
+    <ul>
+
+        {% for user in users %}
+        <tr class="active-row">
+            <td>{{user.userId}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.password}}</td>
+            <td><span class="admin-action"><a href="{{user.userId}}/update-user"> UPDATE </a></span></td>
+            <td><span class="admin-action"><a href="{{user.userId}}/delete-user/"> DELETE </a></span></td>
+            <br>
+        </tr>
+        {% endfor %}
+    </ul>
+</body>
+</html>
