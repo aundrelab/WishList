@@ -32,6 +32,7 @@ def login(request):
 
     return render(request, 'login.html')
 
+
 def signup(request):
     if request.method == "POST":
         req = request.POST
@@ -44,6 +45,7 @@ def signup(request):
             return render(request, 'login.html')
 
     return render(request, 'signup.html');
+
 
 def logout(request):
     req = request.POST
@@ -61,11 +63,17 @@ def deleteacc(request):
     response_data = x.json()
     return render(request, 'home.html')
 
+def dashboard(request):
+    return render(request, 'dashboard.html');
+
 def newItem(request):
     return render(request, 'newItem.html');
 
 def newList(request):
     return render(request, 'newList.html');
+
+def editItem(request):
+    return render(request, 'editItem.html');
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
