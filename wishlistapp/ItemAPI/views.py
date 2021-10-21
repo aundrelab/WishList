@@ -60,7 +60,7 @@ def create(request):
         serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return render(request, 'home.html')
+            return redirect('../dashboard')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # user = User.objects.get(userId=request.session['userId'])
