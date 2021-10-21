@@ -11,30 +11,32 @@ class CreateAccountSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-        def save(self):
-            def username_exists(username):
-                if User.objects.filter(username=username).exists():
-                    return True
+    def save(self):
+        def username_exists(username):
+            if User.objects.filter(username=username).exists():
+                return True
 
-                return False
+            return False
 
-            user = User(
-                name=self.validated_data['name'],
-                password=self.validated_data['password'],
-            )
-            username = self.validated_data['username']
+        user = User(
+            name=self.validated_data['name'],
+            password=self.validated_data['password'],
+        )
 
-            if username_exists(username):
-                raise serializers.ValidationError({'username': 'username already exists'})
-            user.set_username(username)
-            user.save()
-            return user
+        username = self.validated_data['username']
 
-    class DeleteAccountSerializer(serializers.ModelSerializer):
+        if username_exists(username):
+            raise serializers.ValidationError({'username': 'username already exists'})
 
-        class Meta:
-            model = User
-            fields = ['username']
+        user.set_username(username)
+        user.save()
+        return user
+
+class DeleteAccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['username']
 
 class LoginSerializer(serializers.ModelSerializer):
 

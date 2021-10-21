@@ -13,6 +13,7 @@ from . serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from . models import User
 import json
+import requests
 
 
 # Create your views here.
@@ -20,12 +21,50 @@ def home(request):
     return render(request, 'home.html');
 
 def login(request):
-    print(request.GET);
-    return render(request, 'login.html');
+    if request.method == "POST":
+        print('inside login')
+        req = request.POST
+        print(req)
+        url = 'http://127.0.0.1:8000/loginendpoint/'
+        myobj = {'username': req['username'], 'password': req['password']}
+        print(req['username'])
+        x = requests.post(url, data=myobj)
+        response_data = x.json()
+        print(response_data)
+        if 'success' in response_data:
+            return render(request, 'home.html')
+
+    return render(request, 'login.html')
 
 def signup(request):
-    print(request.POST);
+    if request.method == "POST":
+        req = request.POST
+        url = 'http://127.0.0.1:8000/createaccount/'
+        myobj = {'name': req['name'], 'username': req['username'], 'password': req['password']}
+        x = requests.post(url, data=myobj)
+        response_data = x.json()
+        print(response_data)
+
+        if 'response' in response_data:
+            return render(request, 'login.html')
+
     return render(request, 'signup.html');
+
+def logout(request):
+    req = request.POST
+    url = 'http://127.0.0.1:8000/logoutendpoint/'
+    myobj = {'username': req['username'], 'password': req['password']}
+    x = requests.post(url, data=myobj)
+    response_data = x.json()
+    return render(request, 'home.html')
+
+def deleteacc(request):
+    req = request.DELETE
+    url = 'http://127.0.0.1:8000/deleteaccount/'
+    myobj = {'username': req['username']}
+    x = requests.post(url, data=myobj)
+    response_data = x.json()
+    return render(request, 'home.html')
 
 def newItem(request):
     return render(request, 'newItem.html');
@@ -42,6 +81,7 @@ def createaccount_view(request):
     serializer = CreateAccountSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
+        print('hello')
         user = serializer.save()
         data['response'] = 'successfully created account'
 
