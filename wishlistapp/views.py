@@ -20,7 +20,8 @@ def home(request):
     return render(request, 'home.html');
 
 def login(request):
-    print(request.GET);
+    if request.method == "POST":
+        print(request.GET);
     return render(request, 'login.html');
 
 def signup(request):
@@ -32,6 +33,9 @@ def newItem(request):
 
 def newList(request):
     return render(request, 'newList.html');
+
+def editItem(request):
+    return render(request, 'editItem.html');
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
