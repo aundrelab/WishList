@@ -7,9 +7,11 @@ urlpatterns = [
     path('', views.home, name='app-home'),
     path('login', views.login, name='app-login'),
     path('signup', views.signup, name='app-signup'),
+    path('dashboard', views.dashboard, name='app-dashboard'),
     path('newItem', views.newItem, name='app-newItem'),
     path('newList', views.newList, name='app-newList'),
-    path('about/', views.about, name='app-about'),
+    path('editItem', views.editItem, name='app-editItem'),
+    path('about', views.about, name='app-about'),
 
     # Admin features
     path('getAllUsers/', views.admin_get_all_users, name='getAllUsers'),
