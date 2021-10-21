@@ -1,0 +1,39 @@
+body {
+  color: #FCDEC0;
+  font-family: 'Bitter', serif;
+  background-color: #7D5A50;
+}
+
+#form-info {
+  border-radius: 5%;
+  background-color: #B4846C;
+  margin: auto;
+}
+
+.navItem {
+  text-decoration: none;
+  color: #FCDEC0;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 2%;
+}
+
+a:hover {
+  color: #B4846C;
+  background-color: #FCDEC0;
+}
+
+.changeColor {
+  color: #7D5A50;
+  background-color: #FCDEC0;
+}
+
+.current, .current a {
+  background-color: #BFA2DB;
+  color: #FCDEC0;
+  text-decoration: none;
+}
+
+.txt {
+  color: #FCDEC0;
+}
