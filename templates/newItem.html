@@ -43,11 +43,11 @@
         <form action="" method="POST">
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Name </h4>
-            <input type="text" name="name">
+            <input type="text" name="title">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">About </h4>
-            <textarea name="about"></textarea>
+            <textarea name="description"></textarea>
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Category </h4>
@@ -64,16 +64,19 @@
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Image URL </h4>
-            <input type="text" name="image">
+            <input type="text" name="imageURL">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Item URL </h4>
-            <input type="text" name="item">
+            <input type="text" name="itemURL">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">List </h4>
             <select class="m-2" id="list" name="list">
-              <option value="Home">Populate with our lists</option>
+              {% for list in lists %}
+                <option value="{{ list }}">{{ list.listName }}</option>
+                {% empty %}
+              {% endfor %}
             </select>
           </div>
           <div class="d-flex container justify-content-center mt-4">
