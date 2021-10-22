@@ -1,0 +1,73 @@
+{% load static%}
+
+* {
+  color: #FCDEC0;
+  font-family: 'Bitter', serif;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #4a362f;;
+  overflow: hidden;
+}
+
+input {
+    color: #000000;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #FCDEC0;
+  color: black;
+}
+
+body {
+    background-color: #7D5A50;
+}
+
+#delete {
+    background-color: #7D5A50;
+    color: #FCDEC0;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    border-color: #000000;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #4a362f;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    border-color: #000000
+}
