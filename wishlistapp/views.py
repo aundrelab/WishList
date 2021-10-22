@@ -10,10 +10,10 @@ from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
 from . serializers import UserSerializer
 from .models import List,User,Item
-from .ListAPI.serializer import ListSerializer
-from .ItemAPI.serializer import ItemSerializer
 from . serializers import ItemSerializer
 from . serializers import ListSerializer
+from .ListAPI.serializer import ListSerializer as ListSerializerAPI
+from .ItemAPI.serializer import ItemSerializer as ItemSerializerAPI
 from .models import Item, User, List
 
 from rest_framework.authtoken.models import Token
@@ -75,7 +75,7 @@ def deleteacc(request):
 def dashboard(request):
     user = User.objects.get(userId=request.session['userId'])
     lists = List.objects.filter(user=user)
-    serializer = ListSerializer(lists, many=True)
+    serializer = ListSerializerAPI(lists, many=True)
     json_lists = json.loads(json.dumps(serializer.data))
 
     json_items_of_list = []
@@ -84,7 +84,7 @@ def dashboard(request):
             id = list['listId']
             list = List.objects.get(listId=id)
             items = Item.objects.filter(list=list)
-            serializer = ItemSerializer(items, many=True)
+            serializer = ItemSerializerAPI(items, many=True)
             json_items = json.loads(json.dumps(serializer.data))
             json_items_of_list.append(json_items)
     return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
