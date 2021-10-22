@@ -24,18 +24,57 @@ def home(request):
     return render(request, 'home.html');
 
 def login(request):
-    print(request.GET);
-    return render(request, 'login.html');
+    if request.method == "POST":
+        req = request.POST
+        url = 'http://127.0.0.1:8000/loginendpoint/'
+        myobj = {'username': req['username'], 'password': req['password']}
+        x = requests.post(url, data=myobj)
+        response_data = x.json()
+        if 'success' in response_data:
+            return render(request, 'home.html')
+
+    return render(request, 'login.html')
+
 
 def signup(request):
-    print(request.POST);
+    if request.method == "POST":
+        req = request.POST
+        url = 'http://127.0.0.1:8000/createaccount/'
+        myobj = {'name': req['name'], 'username': req['username'], 'password': req['password']}
+        x = requests.post(url, data=myobj)
+        response_data = x.json()
+
+        if 'response' in response_data:
+            return render(request, 'login.html')
+
     return render(request, 'signup.html');
+
+
+def logout(request):
+    req = request.POST
+    url = 'http://127.0.0.1:8000/logoutendpoint/'
+    myobj = {'username': req['username'], 'password': req['password']}
+    x = requests.post(url, data=myobj)
+    response_data = x.json()
+    return render(request, 'home.html')
+
+def deleteacc(request):
+    req = request.DELETE
+    url = 'http://127.0.0.1:8000/deleteaccount/'
+    myobj = {'username': req['username']}
+    x = requests.post(url, data=myobj)
+    response_data = x.json()
+    return render(request, 'home.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html');
 
 def newItem(request):
     return render(request, 'newItem.html');
 
 def newList(request):
     return render(request, 'newList.html');
+
 
 def adminHome(request):
     #validate admin *WIP*
@@ -63,6 +102,10 @@ def adminLists(request):
     return render(request, 'allLists.html', {'lists': my_lists});
 
 
+def editItem(request):
+    return render(request, 'editItem.html');
+
+
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
 
@@ -72,6 +115,7 @@ def createaccount_view(request):
     serializer = CreateAccountSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
+        print('hello')
         user = serializer.save()
         data['response'] = 'successfully created account'
 
