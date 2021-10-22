@@ -10,10 +10,11 @@ from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
 from . serializers import UserSerializer
 from . serializers import ItemSerializer
-from .models import Item
+from . serializers import ListSerializer
+from .models import Item, User, List
 
 from rest_framework.authtoken.models import Token
-from . models import User
+
 import json
 import requests
 
@@ -53,6 +54,13 @@ def adminItems(request):
     # pass in items
     my_items = response;
     return render(request, 'itemList.html', {'items': my_items});
+
+def adminLists(request):
+    # Validate admin *WIP*
+    response = requests.get('http://127.0.0.1:8000/getAllLists/').json();
+    # pass in lists
+    my_lists = response;
+    return render(request, 'allLists.html', {'lists': my_lists});
 
 
 def about(request):
@@ -121,7 +129,6 @@ def deleteaccount_view(request):
 
     return Response(data=data)
 
-
 @api_view(['GET'])
 def admin_get_all_users(request):
     # validate admin *WIP*
@@ -136,6 +143,14 @@ def admin_get_all_items(request):
     if request.method == 'GET':
         item = Item.objects.all()
         serializer = ItemSerializer(item, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def admin_get_all_lists(request):
+    # validate admin *WIP*
+    if request.method == 'GET':
+        list = List.objects.all()
+        serializer = ListSerializer(list, many=True)
         return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
@@ -182,6 +197,30 @@ def updateItem(request, title):
             data["success"] = "update successful"
         return redirect('../..')
 
+@api_view(['GET', 'POST'])
+def updateList(request, listName):
+    # validate admin *WIP*
+    try:
+        list = List.objects.get(listName=listName)
+    except List.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        context = {
+            "list": list
+        }
+        return render(request, "listUpdate.html", context)
+    elif request.method == 'POST':
+        print("Here")
+        list = List.objects.get(listName=listName)
+        serializer = ListSerializer(list, data=request.data)
+        print(list)
+        data = {}
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+        return redirect('../..')
+
 @api_view(['POST', 'GET'])
 def deleteUser(request, userId):
     # validate admin *WIP*
@@ -216,4 +255,22 @@ def deleteItem(request, title):
         return render(request, "itemDelete.html", context)
     elif(request.method == "POST"): # Post method for when you delete the user
         item.delete()
+        return redirect('../../')
+
+@api_view(['POST', 'GET'])
+def deleteList(request, listName):
+    # validate admin *WIP*
+    try:
+        list = List.objects.get(listName=listName)
+
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == "GET"):
+        context = {
+            "list": list
+        }
+        return render(request, "listDelete.html", context)
+    elif(request.method == "POST"): # Post method for when you delete the user
+        list.delete()
         return redirect('../../')

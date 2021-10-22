@@ -9,14 +9,14 @@
 <body>
     <div class="topnav">
         <a href="/admin/home/">Home</a>
-        <a class="active" href="/admin/users/">Users</a>
+        <a href="/admin/users/">Users</a>
         <a href="/admin/items/">Items</a>
-        <a href="/admin/lists/">Lists</a>
+        <a class="active" href="/admin/lists/">Lists</a>
         <a style="float:right" href="#logout">Logout</a>
     </div>
 
     <form method='POST' action=".">{% csrf_token %}
-        <h1>Do you want to delete "{{user.username}}"?</h1>
+        <h1>Do you want to delete "{{list.listName}}"?</h1>
         <p><input id="delete" type='submit' value='DELETE'/> <a href="../../"> Cancel </a> </p>
     </form>
 </body>
