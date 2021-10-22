@@ -1,15 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
 </head>
-
 <body>
+    <div class="topnav">
+        <a class="active" href="/admin/home/">Home</a>
+        <a href="/admin/users/">Users</a>
+        <a href="#contact">Items</a>
+        <a href="#about">Lists</a>
+        <a style="float:right" href="#logout">Logout</a>
+    </div>
+
     <h1> Admin Home Page </h1>
     <p> Welcome to the admin home page</p>
-    <a class="txt-link" href="/admin/home/">Home</a>
-    <a class="txt-link" href="/admin/users/">Users</a>
 
 </body>
 </html>

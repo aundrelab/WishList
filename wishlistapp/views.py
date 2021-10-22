@@ -35,7 +35,7 @@ def newList(request):
     return render(request, 'newList.html');
 
 def adminHome(request):
-    #validaite admin *WIP*
+    #validate admin *WIP*
     return render(request, 'adminHome.html');
 
 def adminUsers(request):
@@ -115,6 +115,7 @@ def deleteaccount_view(request):
 
 @api_view(['GET'])
 def admin_get_all_users(request):
+    # validate admin *WIP*
     if request.method == 'GET':
         user = User.objects.all()
         serializer = UserSerializer(user, many=True)

@@ -1,11 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> User Update </title>
-</head>
-<body>
-    <form method='POST' action=".">{% csrf_token %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
+
+  </head>
+  <body>
+    <div class="main">
+        <div class="topnav">
+            <a href="/admin/home/">Home</a>
+            <a class="active" href="/admin/users/">Users</a>
+            <a href="#contact">Items</a>
+            <a href="#about">Lists</a>
+            <a style="float:right" href="#logout">Logout</a>
+        </div>
+        <header>
+        <div class="container text-center p-5">
+          <h1>Update User</h1>
+        </div>
+      </header>
+      <main>
+        <form method='POST' action=".">{% csrf_token %}
           <div class="input">
               <h4>Name</h4>
             <input type="text" name="name" value="{{user.name}}">
@@ -16,14 +34,10 @@
             <h4>Password</h4>
             <input type="password" name="password" value="{{user.password}}">
           </div>
-          <div class="container d-flex text-center justify-content-center">
-            <div id="home">
-              <a href="/"><i class="fa fa-angle-double-left fa-3x" aria-hidden="true"></i></a>
-            </div>
-          </div>
-
         <p><input type='submit' value='Update'/> <a href="../../"> Back </a> </p>
-    </form>
+        </form>
+      </main>
+    </div>
 
-</body>
+  </body>
 </html>

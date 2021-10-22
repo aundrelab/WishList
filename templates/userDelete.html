@@ -1,13 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirm User Deletion</title>
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
 </head>
 <body>
+    <div class="topnav">
+        <a href="/admin/home/">Home</a>
+        <a class="active" href="/admin/users/">Users</a>
+        <a href="#contact">Items</a>
+        <a href="#about">Lists</a>
+        <a style="float:right" href="#logout">Logout</a>
+    </div>
+
     <form method='POST' action=".">{% csrf_token %}
         <h1>Do you want to delete "{{user.username}}"?</h1>
-        <p><input type='submit' value='Yes'/> <a href="../../"> Cancel </a> </p>
+        <p><input id="delete" type='submit' value='DELETE'/> <a href="../../"> Cancel </a> </p>
     </form>
 </body>
 </html>
