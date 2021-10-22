@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
@@ -31,7 +31,11 @@ def login(request):
         x = requests.post(url, data=myobj)
         response_data = x.json()
         if 'success' in response_data:
-            return render(request, 'home.html')
+            user = User.objects.get(username=req['username'])
+            request.session['password'] = req['password']
+            request.session['username'] = req['username']
+            request.session['userId'] = user.userId
+            return redirect('./dashboard')
 
     return render(request, 'login.html')
 
@@ -43,7 +47,6 @@ def signup(request):
         myobj = {'name': req['name'], 'username': req['username'], 'password': req['password']}
         x = requests.post(url, data=myobj)
         response_data = x.json()
-
         if 'response' in response_data:
             return render(request, 'login.html')
 
@@ -73,15 +76,18 @@ def dashboard(request):
     json_lists = json.loads(json.dumps(serializer.data))
 
     json_items_of_list = []
-    for list in json_lists:
-        id = list.listId
-        list = List.objects.get(listId=id)
-        items = Item.objects.filter(list=list)
-        serializer = ItemSerializer(items, many=True)
-        json_items = json.loads(json.dumps(serializer.data))
-        json_items_of_list.append(items)
-
-    print()
+    if len(lists) > 0:
+        for list in json_lists:
+            id = list['listId']
+            list = List.objects.get(listId=id)
+            items = Item.objects.filter(list=list)
+            serializer = ItemSerializer(items, many=True)
+            json_items = json.loads(json.dumps(serializer.data))
+            print(json_items)
+            json_items_of_list.append(json_items)
+    # print('***********************************')
+    # print('items of list: ', json_items_of_list)
+    # print('lists: ', json_lists)
     return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
 
 def newItem(request):
@@ -118,10 +124,6 @@ def login_view(request):
     data = {}
     if serializer.is_valid():
         if serializer.check():
-            user = User.objects.get(username=request.data['username'])
-            request.session['userId'] = user.userId
-            request.session['username'] = request.data['username']
-            request.session['password'] = request.data['password']
             data['success'] = 'successfully logged in'
         else:
             data = serializer.errors

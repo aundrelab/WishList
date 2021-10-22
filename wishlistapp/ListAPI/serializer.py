@@ -4,4 +4,4 @@ from ..models import List
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = List
-        fields = ["listName", "description"]
+        fields = ['listId', 'user', "listName", "description"]
