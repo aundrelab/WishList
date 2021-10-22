@@ -29,15 +29,12 @@ urlpatterns = [
     path('admin/lists/<listName>/delete-list/', views.deleteList, name="deleteList"),
 
 
-    # Item Features
     path('<itemId>/update-item/', item_views.update, name="update"),
     path('<itemId>/delete-item/', item_views.delete, name="delete"),
     path('<listId>/get-items/', item_views.getItemsofList, name="get"),
-    path('<listId>/create-item/', item_views.create, name="create"),
+    path('create-item/', item_views.create, name="create"),
 
-    # List Features
     path('<userId>/create-list/', list_views.create, name="create"),
-    path('<userId>/get-lists/', list_views.getListsOfUser, name='get'),
 
     path('createaccount/', views.createaccount_view, name='app-createaccount'),
 

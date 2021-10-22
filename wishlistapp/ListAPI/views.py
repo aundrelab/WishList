@@ -25,9 +25,9 @@ def create(request, userId):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def getListsOfUser(request, userId):
+def getListsOfUser(request):
     if request.method == 'GET':
-        user = User.objects.get(userId=userId)
+        user = User.objects.get(userId=request.session['userId'])
         lists = List.objects.filter(user=user)
         serializer = ListSerializer(lists, many=True)
         json1 = json.loads(json.dumps(serializer.data))
