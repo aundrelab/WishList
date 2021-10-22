@@ -8,15 +8,16 @@
 </head>
 <body>
     <div class="topnav">
-        <a class="active" href="/admin/home/">Home</a>
+        <a href="/admin/home/">Home</a>
         <a href="/admin/users/">Users</a>
-        <a href="/admin/items/">Items</a>
+        <a class="active" href="/admin/items/">Items</a>
         <a href="#about">Lists</a>
         <a style="float:right" href="#logout">Logout</a>
     </div>
 
-    <h1> Admin Home Page </h1>
-    <p> Welcome to the admin home page</p>
-
+    <form method='POST' action=".">{% csrf_token %}
+        <h1>Do you want to delete "{{item.title}}"?</h1>
+        <p><input id="delete" type='submit' value='DELETE'/> <a href="../../"> Cancel </a> </p>
+    </form>
 </body>
 </html>

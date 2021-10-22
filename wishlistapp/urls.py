@@ -13,10 +13,15 @@ urlpatterns = [
 
     # Admin features
     path('getAllUsers/', views.admin_get_all_users, name='getAllUsers'),
+    path('getAllItems/', views.admin_get_all_items, name='getAllItems'),
     path('admin/home/', views.adminHome, name='adminHome'),
     path('admin/users/', views.adminUsers, name='adminUsers'),
+    path('admin/items/', views.adminItems, name='adminItems'),
     path('admin/users/<userId>/update-user/', views.updateUser, name="updateUser"),
     path('admin/users/<userId>/delete-user/', views.deleteUser, name="deleteUser"),
+    path('admin/items/<title>/update-item/', views.updateItem, name="update"),
+    path('admin/items/<title>/delete-item/', views.deleteItem, name="delete"),
+
 
     # Item Features
     path('<itemId>/update-item/', item_views.update, name="update"),

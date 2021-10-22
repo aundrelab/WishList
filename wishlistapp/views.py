@@ -9,6 +9,8 @@ from . serializers import CreateAccountSerializer
 from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
 from . serializers import UserSerializer
+from . serializers import ItemSerializer
+from .models import Item
 
 from rest_framework.authtoken.models import Token
 from . models import User
@@ -44,6 +46,13 @@ def adminUsers(request):
     # pass in users
     my_users = response;
     return render(request, 'userList.html', {'users': my_users});
+
+def adminItems(request):
+    # Validate admin *WIP*
+    response = requests.get('http://127.0.0.1:8000/getAllItems/').json();
+    # pass in items
+    my_items = response;
+    return render(request, 'itemList.html', {'items': my_items});
 
 
 def about(request):
@@ -121,6 +130,14 @@ def admin_get_all_users(request):
         serializer = UserSerializer(user, many=True)
         return Response(serializer.data)
 
+@api_view(['GET'])
+def admin_get_all_items(request):
+    # validate admin *WIP*
+    if request.method == 'GET':
+        item = Item.objects.all()
+        serializer = ItemSerializer(item, many=True)
+        return Response(serializer.data)
+
 @api_view(['GET', 'POST'])
 def updateUser(request, userId):
     # validate admin *WIP*
@@ -143,6 +160,28 @@ def updateUser(request, userId):
             data["success"] = "update successful"
         return redirect('../..')
 
+@api_view(['GET', 'POST'])
+def updateItem(request, title):
+    # validate admin *WIP*
+    try:
+        item = Item.objects.get(title=title)
+    except Item.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        context = {
+            "item": item
+        }
+        return render(request, "itemUpdate.html", context)
+    elif request.method == 'POST':
+        item = Item.objects.get(title=title)
+        serializer = ItemSerializer(item, data=request.data)
+        data = {}
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+        return redirect('../..')
+
 @api_view(['POST', 'GET'])
 def deleteUser(request, userId):
     # validate admin *WIP*
@@ -159,4 +198,22 @@ def deleteUser(request, userId):
         return render(request, "userDelete.html", context)
     elif(request.method == "POST"): # Post method for when you delete the user
         user.delete()
+        return redirect('../../')
+
+@api_view(['POST', 'GET'])
+def deleteItem(request, title):
+    # validate admin *WIP*
+    try:
+        item = Item.objects.get(title=title)
+
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == "GET"):
+        context = {
+            "item": item
+        }
+        return render(request, "itemDelete.html", context)
+    elif(request.method == "POST"): # Post method for when you delete the user
+        item.delete()
         return redirect('../../')
