@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Admin</title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
+  </head>
+  <body>
+    <div class="main">
+        <div class="topnav">
+            <a href="/admin/home/">Home</a>
+            <a href="/admin/users/">Users</a>
+            <a href="/admin/items/">Items</a>
+            <a class="active" href="/admin/lists/">Lists</a>
+            <a style="float:right" href="#logout">Logout</a>
+        </div>
+        <header>
+        <div class="container text-center p-5">
+          <h1>Update List</h1>
+        </div>
+      </header>
+      <main>
+        <form method='POST' action=".">{% csrf_token %}
+          <div class="input">
+            <h4>Title</h4>
+            <input type="text" name="listName" value="{{list.listName}}">
+            <br><br>
+            <h4>Description</h4>
+            <input type="text" name="description" value="{{list.description}}">
+            <br><br>
+          </div>
+        <p><input type='submit' value='Update'/> <a href="../../"> Back </a> </p>
+        </form>
+      </main>
+    </div>
+
+  </body>
+</html>

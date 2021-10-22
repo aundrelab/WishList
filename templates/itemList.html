@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Admin </title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
+</head>
+<body>
+    <div class="topnav">
+        <a href="/admin/home/">Home</a>
+        <a href="/admin/users/">Users</a>
+        <a class="active" href="/admin/items/">Items</a>
+        <a href="/admin/lists/">Lists</a>
+        <a style="float:right" href="#logout">Logout</a>
+    </div>
+
+    <h1> All Items </h1>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>imageURL</th>
+                <th>itemURL</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        {% for item in items %}
+        <tr class="active-row">
+            <td>{{item.title}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.imageURL}}</td>
+            <td>{{item.itemURL}}</td>
+            <td><span class="admin-action"><a href="{{item.title}}/update-item/"> UPDATE </a></span></td>
+            <td><span class="admin-action"><a href="{{item.title}}/delete-item/"> DELETE </a></span></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
