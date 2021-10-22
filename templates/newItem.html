@@ -27,27 +27,27 @@
       <div class="col-6">
         <h1>My Registry</h1>
       </div>
-      <div class="col-4"></div>
-      <div class="col-2 nav nav-pills nav-justified">
-        <a href=""><h5>Home</h5></a>
+      <div class="col-3"></div>
+      <div class="col-3 nav nav-pills nav-justified">
+        <a href="home"><h5>Home</h5></a>
         <a href=""><h5>Profile</h5></a>
         <a href=""><h5>Logout</h5></a>
       </div>
     </div>
     <div id="form-main" class="container flex-column justify-content-center mt-5">
       <div id="form-title">
-        <h1 id="title" class="text-center display-1">Add a Gift.</h1>
+        <h1 id="title" class="text-center display-1">Add a Gift</h1>
       </div>
       <br><hr><br>
       <div id="form-info" class="p-5 w-50">
         <form action="" method="POST">
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Name </h4>
-            <input type="text" name="name">
+            <input type="text" name="title">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">About </h4>
-            <textarea name="about"></textarea>
+            <textarea name="description"></textarea>
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Category </h4>
@@ -64,16 +64,19 @@
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Image URL </h4>
-            <input type="text" name="image">
+            <input type="text" name="imageURL">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">Item URL </h4>
-            <input type="text" name="item">
+            <input type="text" name="itemURL">
           </div>
           <div class="d-flex container justify-content-center mt-4">
             <h4 class="m-1">List </h4>
             <select class="m-2" id="list" name="list">
-              <option value="Home">Populate with our lists</option>
+              {% for list in lists %}
+                <option value="{{ list }}">{{ list.listName }}</option>
+                {% empty %}
+              {% endfor %}
             </select>
           </div>
           <div class="d-flex container justify-content-center mt-4">

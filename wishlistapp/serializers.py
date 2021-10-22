@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from . models import User
+from . models import User, Item, List
 
 class CreateAccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['userId', 'name', 'username', 'password']
+        fields = ['name', 'username', 'password']
 
         extra_kwargs = {
             'password': {'write_only': True}
@@ -28,12 +28,15 @@ class CreateAccountSerializer(serializers.ModelSerializer):
         if username_exists(username):
             raise serializers.ValidationError({'username': 'username already exists'})
 
-        if not username:
-            raise serializers.ValidationError({'username': 'username cannot be blank'})
-
         user.set_username(username)
         user.save()
         return user
+
+class DeleteAccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['username']
 
 class LoginSerializer(serializers.ModelSerializer):
 
@@ -47,7 +50,6 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def check(self):
         if self.username_exists(self.validated_data['username']):
-            print('some')
             user = User.objects.get(username=self.validated_data['username'])
             if user.password != self.validated_data['password']:
                 raise serializers.ValidationError({'failure': 'incorrect password'})
@@ -73,3 +75,19 @@ class LogoutSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ["title", "description", "category", "imageURL", "itemURL"]
+
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = List
+        fields = ["listName", "description"]

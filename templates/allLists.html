@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Admin </title>
+    <link rel="stylesheet" href="{% static 'css/userLists.css' %}">
+</head>
+<body>
+    <div class="topnav">
+        <a href="/admin/home/">Home</a>
+        <a href="/admin/users/">Users</a>
+        <a href="/admin/items/">Items</a>
+        <a class="active" href="/admin/lists/">Lists</a>
+        <a style="float:right" href="#logout">Logout</a>
+    </div>
+
+    <h1> All Lists </h1>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>List Name</th>
+                <th>Description</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        {% for list in lists %}
+        <tr class="active-row">
+            <td>{{list.listName}}</td>
+            <td>{{list.description}}</td>
+            <td><span class="admin-action"><a href="{{list.listName}}/update-list/"> UPDATE </a></span></td>
+            <td><span class="admin-action"><a href="{{list.listName}}/delete-list/"> DELETE </a></span></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

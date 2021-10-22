@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Sign Up</title>
+    <title>Login</title>
 <!--    <link href="user.css" rel="stylesheet" type="text/css" />-->
     <link rel="stylesheet" href="{% static 'css/user.css' %}">
     <!-- Bootstrap -->
@@ -25,17 +25,14 @@
     <div class="main">
       <header>
         <div class="container text-center p-5">
-          <h1>WishList</h1>
+          <h1>My Registry</h1>
           <p>What's on your wishlist? Let people know what gifts you'd like. Save time. Add your items and ideas in one convenient location.</p>
         </div>
       </header>
 
       <main>
-        <form action="" method="POST">
+        <form action="/login" method="POST" > {% csrf_token %}
           <div class="input">
-            <h4>Name</h4>
-            <input type="text" name="name">
-            <br><br>
             <h4>Username</h4>
             <input type="text" name="username">
             <br><br>
@@ -44,10 +41,10 @@
           </div>
           <div class="container d-flex text-center justify-content-center">
             <div id="home">
-              <a href="home"><i class="fa fa-angle-double-left fa-3x" aria-hidden="true"></i></a>
+              <a href="login"><i class="fa fa-angle-double-left fa-3x" aria-hidden="true"></i></a>
             </div>
-            <div id="signup">
-              <button type="submit"><i class="fa fa-user-plus fa-3x" aria-hidden="true"></i></button>
+            <div id="login">
+              <button type="submit"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></button>
             </div>
           </div>
         </form>
@@ -56,12 +53,12 @@
 
     <script>
       $(function(){
-        $('#signup').hover(function() {
-          $('.fa-user-plus').css("backgroundColor", "#F3F1F5");
-          $('.fa-user-plus').css("color", "#FCDEC0");
+        $('#login').hover(function() {
+          $('.fa-sign-in').css("backgroundColor", "#F3F1F5");
+          $('.fa-sign-in').css("color", "#FCDEC0");
         }, function() {
-          $('.fa-user-plus').css("backgroundColor", "#BFA2DB");
-          $('.fa-user-plus').css("color", "#F3F1F5");
+          $('.fa-sign-in').css("backgroundColor", "#BFA2DB");
+          $('.fa-sign-in').css("color", "#F3F1F5");
         })
       })
 

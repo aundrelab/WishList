@@ -1,26 +1,22 @@
+{% load static%}
 
 * {
   color: #FCDEC0;
   font-family: 'Bitter', serif;
-  background-image: url('images/gift.jpg');
+  background-image: url('../images/gift.jpg');
   background-color: #7D5A50;
 }
 
 header h1 {
-  font-size: 175px;
+  font-size: 120px;
 }
 
 header p {
   font-size: 24px;
 }
 
-.input {
-  margin: auto;
-  width: 21%;
-}
-
-input {
-  padding: 4px;
+a {
+  text-decoration: none;
 }
 
 .main {
@@ -31,23 +27,18 @@ input {
   transform: translate(-50%, -50%);
 }
 
-button {
-  text-decoration: none;
-  border: 0px;
-  padding: 0px;
+main div {
+  margin-top: 25px;
 }
 
-main, main div {
-  margin-top: 15px;
-}
 
-#login, #signup, #home {
-  margin: 20px 45px;
-  padding: 15px;
+#login, #signup {
+  margin: 5px 100px;
+  padding: 20px;
   border: 5px solid #F3F1F5;
-  height: 90px;
+  height: 120px;
   border-radius:50%;
   -moz-border-radius:50%;
   -webkit-border-radius:50%;
-  width: 90px;
+  width: 120px;
 }
