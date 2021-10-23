@@ -62,6 +62,21 @@ def create(request):
     json1 = json.loads(json.dumps(serializer.data))
     return render(request, 'newItem.html', {'lists': json1})
 
+@api_view(['POST', 'GET'])
+def editItem(request):
+    if request.method == 'POST':
+        item = Item.objects.get(itemId=request.POST.get('itemId'))
+        serializer = ItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('../dashboard')
+
+    id = request.GET.get('itemId')
+    item = Item.objects.get(itemId=id)
+    serializer = ItemSerializer(item)
+    json1 = json.loads(json.dumps(serializer.data))
+    return render(request, 'editItem.html', {'item': json1})
+
 @api_view(['GET'])
 def getItemsofList(request, listId):
     if request.method == 'GET':
