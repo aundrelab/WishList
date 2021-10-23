@@ -73,21 +73,41 @@ def deleteacc(request):
     return render(request, 'home.html')
 
 def dashboard(request):
+    if request.method == 'POST':
+        user = User.objects.get(userId=request.session['userId'])
+        lists = List.objects.filter(user=user)
+        serializer = ListSerializerAPI(lists, many=True)
+        json_lists = json.loads(json.dumps(serializer.data))
+
+        items = []
+        for list in json_lists:
+            if list['listId'] == request.POST['listId']:
+                id = list['listId']
+                list = List.objects.get(listId=id)
+                items = Item.objects.filter(list=list)
+                serializer = ItemSerializerAPI(items, many=True)
+                json_items = json.loads(json.dumps(serializer.data))
+                items.append(json_items)
+                return render(request, 'dashboard.html', {'lists': json_lists, 'items': items, 'idToHighlight': list['listId']});
+
     user = User.objects.get(userId=request.session['userId'])
     lists = List.objects.filter(user=user)
     serializer = ListSerializerAPI(lists, many=True)
     json_lists = json.loads(json.dumps(serializer.data))
 
-    json_items_of_list = []
+    json_items = []
+    idToHighlight = -1
     if len(lists) > 0:
-        for list in json_lists:
-            id = list['listId']
-            list = List.objects.get(listId=id)
-            items = Item.objects.filter(list=list)
-            serializer = ItemSerializerAPI(items, many=True)
-            json_items = json.loads(json.dumps(serializer.data))
-            json_items_of_list.append(json_items)
-    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
+        id = json_lists[0]['listId']
+        idToHighlight = id
+        list = List.objects.get(listId=id)
+        items = Item.objects.filter(list=list)
+        serializer = ItemSerializerAPI(items, many=True)
+        json_items = json.loads(json.dumps(serializer.data))
+        json_items.append(json_items)
+    print('lists:', json_lists)
+    print('items:', json_items)
+    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items, 'idToHighlight': idToHighlight});
 
 def newItem(request):
     return render(request, 'newItem.html');
