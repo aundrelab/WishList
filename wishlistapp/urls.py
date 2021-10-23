@@ -11,6 +11,7 @@ urlpatterns = [
     path('newItem', item_views.create, name='app-newItem'),
     path('newList', list_views.create, name='app-newList'),
     path('editItem', views.editItem, name='app-editItem'),
+    path('editList', views.editList, name='app-editList'),
     path('about', views.about, name='app-about'),
 
     # Admin features
