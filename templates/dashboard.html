@@ -41,176 +41,56 @@
 
     <main>
       <div class="container text-center p-5">
-        <p class="display-1"> Welcome, Aundre! </p>
+        <p class="display-1"> Welcome, {{ username }}! </p>
       </div>
-      <!-- Hi <user>? -->
+
       <div class="container">
         <div class="row">
           <div class="col-3 pt-5">
             <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action changeColor bg-success txt" aria-current="true">
+            <!-- Iterate over lists -->
+            {% for list in lists %}
+            <!-- Display Objects -->
+              <form action="/dashboard" method="POST"> {% csrf_token %}
+                <a onclick="$(this).closest('form').submit()" class="list-group-item list-group-item-action changeColor" aria-current="true"> <!-- bg-primary text-white -->
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{ list.listName }}</div>
+                    {{ list.description }}
+                  </div>
+                  <input type="hidden" name="listId" value="{{list.listId}}">
+                </a>
+              </form>
+            {% endfor %}
+
+              <a href="newList" class="list-group-item list-group-item-action changeColor bg-success txt" aria-current="true">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
+                  <div class="fw-bold">New List <i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+                    Add a new item to a list!
                 </div>
               </a>
             </div>
           </div>
           <!-- <div class="col-1"></div> -->
-          <div class="col-9">
-            <div class="row">
-              <div class="col-3 pt-5">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
+          <div class="col-9 pt-5">
+            <div class="card-grid">
+              {% for item in items %}
+              <div class="card changeColor">
+                <img class="card-img-top" src="{{item.imageURL}}" alt="Image of {{ item.title }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.title }}</h5>
+                  {{ item.description }} <br> {{ item.category }} <br>
+                  <a href="{{item.itemURL}}"><p >Link to Item</p></a> <br>
+                  <a href="../editItem" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                  <a href="../deleteItem" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </div>
               </div>
-              <div class="col-3 pt-5">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-5">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-5">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-3 pt-4">
-                <div class="card changeColor">
-                  <img src="" class="card-img-top" alt="">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                  </div>
+              {% endfor %}
+              <div class="card changeColor">
+                <img src="" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">New Item</h5>
+                  <p class="card-text">Add a new item to a list!</p>
+                  <a href="newItem" class="text-white btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>

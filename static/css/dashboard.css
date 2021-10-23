@@ -37,3 +37,10 @@ a:hover {
 .txt {
   color: #FCDEC0;
 }
+
+.card-grid {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px;
+}
