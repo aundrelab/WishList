@@ -10,7 +10,7 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='app-dashboard'),
     path('newItem', item_views.create, name='app-newItem'),
     path('newList', list_views.create, name='app-newList'),
-    path('editItem', views.editItem, name='app-editItem'),
+    path('<itemId>/editItem', item_views.editItem, name='app-editItem'),
     path('about', views.about, name='app-about'),
 
     # Admin features
@@ -30,7 +30,7 @@ urlpatterns = [
 
 
     path('<itemId>/update-item/', item_views.update, name="update"),
-    path('<itemId>/delete-item/', item_views.delete, name="delete"),
+    path('<itemId>/delete-item', item_views.delete, name="delete"),
     path('<listId>/get-items/', item_views.getItemsofList, name="get"),
     path('create-item/', item_views.create, name="create"),
 

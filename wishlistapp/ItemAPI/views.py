@@ -27,14 +27,17 @@ def update(request, itemId):
 @api_view(['DELETE', 'GET'])
 def delete(request, itemId):
     if request.method == 'GET':
-        item = Item.objects.get(itemId=itemId)
-        serializer = ItemSerializer(item, many=False)
-        return Response(serializer.data)
-
-    if request.method == "DELETE":
+        # item = Item.objects.get(itemId=itemId)
+        # serializer = ItemSerializer(item, many=False)
+        # return Response(serializer.data)
         item = Item.objects.get(itemId=itemId)
         item.delete()
-        return Response(status=status.HTTP_200_OK)
+        return redirect('../../dashboard')
+
+    # if request.method == "DELETE":
+    #     item = Item.objects.get(itemId=itemId)
+    #     item.delete()
+    #     return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
@@ -63,19 +66,25 @@ def create(request):
     return render(request, 'newItem.html', {'lists': json1})
 
 @api_view(['POST', 'GET'])
-def editItem(request):
+def editItem(request, itemId):
     if request.method == 'POST':
-        item = Item.objects.get(itemId=request.POST.get('itemId'))
+        item = Item.objects.get(itemId=itemId)
         serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return redirect('../dashboard')
+            return redirect('../../dashboard')
 
-    id = request.GET.get('itemId')
+    id = itemId
     item = Item.objects.get(itemId=id)
     serializer = ItemSerializer(item)
     json1 = json.loads(json.dumps(serializer.data))
-    return render(request, 'editItem.html', {'item': json1})
+
+    user = User.objects.get(userId=request.session['userId'])
+    lists = List.objects.filter(user=user)
+    serializer = ListSerializer(lists, many=True)
+    json2 = json.loads(json.dumps(serializer.data))
+    print(json1)
+    return render(request, 'editItem.html', {'item': json1, 'lists': json2})
 
 @api_view(['GET'])
 def getItemsofList(request, listId):
