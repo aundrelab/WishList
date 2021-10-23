@@ -2,27 +2,25 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import json
+from django.shortcuts import render, redirect
 
 from ..models import List
 from ..models import User
 from .serializer import ListSerializer
 
 @api_view(['POST', 'GET'])
-def create(request, userId):
-    if request.method == 'GET':
-        user_of_list = User.objects.get(userId=userId)
-        list = List(user=user_of_list)
-        serializer = ListSerializer(list, many=False)
-        return Response(serializer.data)
-
+def create(request):
     if request.method == "POST":
-        user_of_list = User.objects.get(userId=userId)
+        user_of_list = User.objects.get(userId=request.session["userId"])
         list = List(user=user_of_list)
+
         serializer = ListSerializer(list, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return redirect('../dashboard')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return render(request, 'newList.html')
 
 @api_view(['GET'])
 def getListsOfUser(request):
