@@ -35,6 +35,8 @@ urlpatterns = [
     path('create-item/', item_views.create, name="create"),
 
     path('<userId>/create-list/', list_views.create, name="create"),
+    path('<listId>/edit-list', list_views.update, name='edit'),
+    path('<listId>/delete-list', list_views.delete, name='delete'),
 
     path('createaccount/', views.createaccount_view, name='app-createaccount'),
 

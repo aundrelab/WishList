@@ -27,17 +27,9 @@ def update(request, itemId):
 @api_view(['DELETE', 'GET'])
 def delete(request, itemId):
     if request.method == 'GET':
-        # item = Item.objects.get(itemId=itemId)
-        # serializer = ItemSerializer(item, many=False)
-        # return Response(serializer.data)
         item = Item.objects.get(itemId=itemId)
         item.delete()
         return redirect('../../dashboard')
-
-    # if request.method == "DELETE":
-    #     item = Item.objects.get(itemId=itemId)
-    #     item.delete()
-    #     return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
