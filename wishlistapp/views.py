@@ -148,6 +148,9 @@ def adminLists(request):
 def editItem(request):
     return render(request, 'editItem.html');
 
+def editList(request):
+    return render(request, 'editList.html');
+
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
