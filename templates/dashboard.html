@@ -80,8 +80,8 @@
                   <h5 class="card-title">{{ item.title }}</h5>
                   {{ item.description }} <br> {{ item.category }} <br>
                   <a href="{{item.itemURL}}"><p >Link to Item</p></a> <br>
-                  <a href="../editItem" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                  <a href="../deleteItem" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  <a href="../{{item.itemId}}/editItem" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                  <a href="../{{item.itemId}}/delete-item" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </div>
               </div>
               {% endfor %}

@@ -88,6 +88,8 @@ def dashboard(request):
                 serializer = ItemSerializerAPI(items, many=True)
                 json_items = json.loads(json.dumps(serializer.data))
                 listItems.append(json_items)
+                print('lists:', json_lists)
+                print('items:', json_items)
                 return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': id});
 
     user = User.objects.get(userId=request.session['userId'])
