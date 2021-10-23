@@ -8,9 +8,9 @@ urlpatterns = [
     path('login', views.login, name='app-login'),
     path('signup', views.signup, name='app-signup'),
     path('dashboard', views.dashboard, name='app-dashboard'),
-    path('newItem', views.newItem, name='app-newItem'),
-    path('newList', views.newList, name='app-newList'),
-    path('editItem', views.editItem, name='app-editItem'),
+    path('newItem', item_views.create, name='app-newItem'),
+    path('newList', list_views.create, name='app-newList'),
+    path('<itemId>/editItem', item_views.editItem, name='app-editItem'),
     path('about', views.about, name='app-about'),
 
     # Admin features
@@ -30,11 +30,13 @@ urlpatterns = [
 
 
     path('<itemId>/update-item/', item_views.update, name="update"),
-    path('<itemId>/delete-item/', item_views.delete, name="delete"),
+    path('<itemId>/delete-item', item_views.delete, name="delete"),
     path('<listId>/get-items/', item_views.getItemsofList, name="get"),
     path('create-item/', item_views.create, name="create"),
 
     path('<userId>/create-list/', list_views.create, name="create"),
+    path('<listId>/edit-list', list_views.update, name='edit'),
+    path('<listId>/delete-list', list_views.delete, name='delete'),
 
     path('createaccount/', views.createaccount_view, name='app-createaccount'),
 

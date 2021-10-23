@@ -28,34 +28,22 @@ def update(request, itemId):
 def delete(request, itemId):
     if request.method == 'GET':
         item = Item.objects.get(itemId=itemId)
-        serializer = ItemSerializer(item, many=False)
-        return Response(serializer.data)
-
-    if request.method == "DELETE":
-        item = Item.objects.get(itemId=itemId)
         item.delete()
-        return Response(status=status.HTTP_200_OK)
+        return redirect('../../dashboard')
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 ## pass list id to create so item has a list associated to it
 @api_view(['POST', 'GET'])
 def create(request):
-    # if request.method == 'GET':
-    #     list_of_item = List.objects.get(listId=listId)
-    #     item = Item(list=list_of_item)
-    #     serializer = ItemSerializer(item, many=False)
-    #     return Response(serializer.data)
     if request.method == "POST":
-        print(request.POST.get('name'))
-        print(request.POST.get('about'))
-        print(request.POST.get('category'))
-        print(request.POST.get('image'))
-        print(request.POST.get('item'))
-        print(request.POST.get('list'))
         print('***************************')
-        list_of_item = List.objects.get(listId=request.POST.get('list'))
-        print(request.POST.get('list'))
+        l = str(request.POST.get('list'))
+        l = l.replace("\'", "\"")
+        j_list = json.loads(l)
+
+        list_of_item = List.objects.get(listId=j_list['listId'])
+        print('type:', type(list_of_item))
         item = Item(list=list_of_item)
         serializer = ItemSerializer(item, data=request.data)
         if serializer.is_valid():
@@ -63,13 +51,32 @@ def create(request):
             return redirect('../dashboard')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # user = User.objects.get(userId=request.session['userId'])
-    # lists = List.objects.filter(user=user)
-    # serializer = ListSerializer(lists, many=True)
-    # json1 = json.loads(json.dumps(serializer.data))
-    # print(json1)
-    # return render(request, 'newItem.html', {'lists': json1})
-    return render(request, 'newItem.html')
+    user = User.objects.get(userId=request.session['userId'])
+    lists = List.objects.filter(user=user)
+    serializer = ListSerializer(lists, many=True)
+    json1 = json.loads(json.dumps(serializer.data))
+    return render(request, 'newItem.html', {'lists': json1})
+
+@api_view(['POST', 'GET'])
+def editItem(request, itemId):
+    if request.method == 'POST':
+        item = Item.objects.get(itemId=itemId)
+        serializer = ItemSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('../../dashboard')
+
+    id = itemId
+    item = Item.objects.get(itemId=id)
+    serializer = ItemSerializer(item)
+    json1 = json.loads(json.dumps(serializer.data))
+
+    user = User.objects.get(userId=request.session['userId'])
+    lists = List.objects.filter(user=user)
+    serializer = ListSerializer(lists, many=True)
+    json2 = json.loads(json.dumps(serializer.data))
+    print(json1)
+    return render(request, 'editItem.html', {'item': json1, 'lists': json2})
 
 @api_view(['GET'])
 def getItemsofList(request, listId):

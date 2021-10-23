@@ -10,10 +10,10 @@ from . serializers import LoginSerializer
 from . serializers import LogoutSerializer
 from . serializers import UserSerializer
 from .models import List,User,Item
-from .ListAPI.serializer import ListSerializer
-from .ItemAPI.serializer import ItemSerializer
 from . serializers import ItemSerializer
 from . serializers import ListSerializer
+from .ListAPI.serializer import ListSerializer as ListSerializerAPI
+from .ItemAPI.serializer import ItemSerializer as ItemSerializerAPI
 from .models import Item, User, List
 
 from rest_framework.authtoken.models import Token
@@ -77,25 +77,44 @@ def deleteacc(request):
     return render(request, 'home.html')
 
 def dashboard(request):
+    if request.method == 'POST':
+        user = User.objects.get(userId=request.session['userId'])
+        lists = List.objects.filter(user=user)
+        serializer = ListSerializerAPI(lists, many=True)
+        json_lists = json.loads(json.dumps(serializer.data))
+
+        listItems = []
+        for list in json_lists:
+            if str(list['listId']) == str(request.POST['listId']):
+                id = list['listId']
+                list = List.objects.get(listId=id)
+                items = Item.objects.filter(list=list)
+                serializer = ItemSerializerAPI(items, many=True)
+                json_items = json.loads(json.dumps(serializer.data))
+                listItems.append(json_items)
+                print('lists:', json_lists)
+                print('items:', json_items)
+                return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': id});
+
     user = User.objects.get(userId=request.session['userId'])
     lists = List.objects.filter(user=user)
-    serializer = ListSerializer(lists, many=True)
+    serializer = ListSerializerAPI(lists, many=True)
     json_lists = json.loads(json.dumps(serializer.data))
 
-    json_items_of_list = []
+    json_items = []
+    idToHighlight = -1
     if len(lists) > 0:
-        for list in json_lists:
-            id = list['listId']
-            list = List.objects.get(listId=id)
-            items = Item.objects.filter(list=list)
-            serializer = ItemSerializer(items, many=True)
-            json_items = json.loads(json.dumps(serializer.data))
-            print(json_items)
-            json_items_of_list.append(json_items)
-    # print('***********************************')
-    # print('items of list: ', json_items_of_list)
-    # print('lists: ', json_lists)
-    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
+        id = json_lists[0]['listId']
+        idToHighlight = id
+        list = List.objects.get(listId=id)
+        items = Item.objects.filter(list=list)
+        serializer = ItemSerializerAPI(items, many=True)
+        json_items = json.loads(json.dumps(serializer.data))
+        json_items.append(json_items)
+        json_items.pop()
+    print('lists:', json_lists)
+    print('items:', json_items)
+    return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': idToHighlight});
 
 def newItem(request):
     return render(request, 'newItem.html');
@@ -135,6 +154,9 @@ def adminLists(request):
 def editItem(request):
     return render(request, 'editItem.html');
 
+def editList(request):
+    return render(request, 'editList.html');
+
 
 def about(request):
     return HttpResponse('<h1>The about page</h1>')
@@ -169,6 +191,7 @@ def login_view(request):
     return Response(data)
 
 
+
 @api_view(['POST', 'GET'])
 def logout_view(request):
     serializer = LogoutSerializer(data=request.data)
@@ -178,7 +201,6 @@ def logout_view(request):
         del request.session['username']
         del request.session['password']
         data['success'] = 'successfully logged out user'
-
     return redirect('../')
 
 
