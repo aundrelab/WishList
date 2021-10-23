@@ -51,8 +51,8 @@
             <!-- Iterate over lists -->
             {% for list in lists %}
             <!-- Display Objects -->
-              <form action="/dashboard" method="POST">
-                <a class="list-group-item list-group-item-action changeColor" aria-current="true">
+              <form action="/dashboard" method="POST"> {% csrf_token %}
+                <a onclick="$(this).closest('form').submit()" class="list-group-item list-group-item-action changeColor" aria-current="true"> <!-- bg-primary text-white -->
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">{{ list.listName }}</div>
                     {{ list.description }}
@@ -75,11 +75,11 @@
             <div class="card-grid">
               {% for item in items %}
               <div class="card changeColor">
-                <img class="card-img-top" src="{{item.url}}">
+                <img class="card-img-top" src="{{item.imageURL}}" alt="Image of {{ item.title }}">
                 <div class="card-body">
                   <h5 class="card-title">{{ item.title }}</h5>
-                  {{ item.description }} <br> {{ item.category }}
-                  <a href="{{item.itemURL}}"><p class="card-text">Item Link</p></a>
+                  {{ item.description }} <br> {{ item.category }} <br>
+                  <a href="{{item.itemURL}}"><p >Link to Item</p></a> <br>
                   <a href="../editItem" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                   <a href="../deleteItem" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
                 </div>

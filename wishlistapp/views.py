@@ -79,16 +79,16 @@ def dashboard(request):
         serializer = ListSerializerAPI(lists, many=True)
         json_lists = json.loads(json.dumps(serializer.data))
 
-        items = []
+        listItems = []
         for list in json_lists:
-            if list['listId'] == request.POST['listId']:
+            if str(list['listId']) == str(request.POST['listId']):
                 id = list['listId']
                 list = List.objects.get(listId=id)
                 items = Item.objects.filter(list=list)
                 serializer = ItemSerializerAPI(items, many=True)
                 json_items = json.loads(json.dumps(serializer.data))
-                items.append(json_items)
-                return render(request, 'dashboard.html', {'lists': json_lists, 'items': items, 'idToHighlight': list['listId']});
+                listItems.append(json_items)
+                return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': id});
 
     user = User.objects.get(userId=request.session['userId'])
     lists = List.objects.filter(user=user)
@@ -107,7 +107,7 @@ def dashboard(request):
         json_items.append(json_items)
     print('lists:', json_lists)
     print('items:', json_items)
-    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items, 'idToHighlight': idToHighlight});
+    return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': idToHighlight});
 
 def newItem(request):
     return render(request, 'newItem.html');
