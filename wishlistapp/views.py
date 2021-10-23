@@ -88,10 +88,10 @@ def dashboard(request):
             json_items = json.loads(json.dumps(serializer.data))
             print(json_items)
             json_items_of_list.append(json_items)
-    # print('***********************************')
-    # print('items of list: ', json_items_of_list)
-    # print('lists: ', json_lists)
-    return render(request, 'dashboard.html', {'lists': json_lists, 'items': json_items_of_list});
+    print('***********************************')
+    print('items of list: ', json_items_of_list)
+    print('lists: ', json_lists)
+    return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items_of_list});
 
 def newItem(request):
     return render(request, 'newItem.html');

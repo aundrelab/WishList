@@ -41,35 +41,60 @@
 
     <main>
       <div class="container text-center p-5">
-        <p class="display-1"> Welcome, Aundre! </p>
+        <p class="display-1"> Welcome, {{ username }}! </p>
       </div>
-      <!-- Hi <user>? -->
+
       <div class="container">
         <div class="row">
           <div class="col-3 pt-5">
             <div class="list-group">
+
+            <!-- Iterate over lists -->
+            {% for list in lists %}
+
+          <!-- Display Objects -->
               <a href="#" class="list-group-item list-group-item-action changeColor bg-success txt" aria-current="true">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
+                  <div class="fw-bold">{{ list.title }}</div>
+                  {{ object.description }}
                 </div>
               </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
+
+            {% endfor %}
+
+      <!-- Hi <user>? -->
+<!--      <div class="container">-->
+<!--        <div class="row">-->
+<!--          <div class="col-3 pt-5">-->
+<!--            <div class="list-group">-->
+<!--              <a href="#" class="list-group-item list-group-item-action changeColor bg-success txt" aria-current="true">-->
+<!--                <div class="ms-2 me-auto">-->
+<!--                  <div class="fw-bold">Subheading</div>-->
+<!--                  Content for list item-->
+<!--                </div>-->
+<!--              </a>-->
+<!--              <a href="#" class="list-group-item list-group-item-action changeColor">-->
+<!--                <div class="ms-2 me-auto">-->
+<!--                  <div class="fw-bold">Subheading</div>-->
+<!--                  Content for list item-->
+<!--                </div>-->
+<!--              </a>-->
+<!--              <a href="#" class="list-group-item list-group-item-action changeColor">-->
+<!--                <div class="ms-2 me-auto">-->
+<!--                  <div class="fw-bold">Subheading</div>-->
+<!--                  Content for list item-->
+<!--                </div>-->
+<!--              </a>-->
+<!--              <a href="#" class="list-group-item list-group-item-action changeColor">-->
+<!--                <div class="ms-2 me-auto">-->
+<!--                  <div class="fw-bold">Subheading</div>-->
+<!--                  Content for list item-->
+<!--                </div>-->
+<!--              </a>-->
+              <a href="newList" class="list-group-item list-group-item-action changeColor bg-success txt" aria-current="true">
                 <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
-                </div>
-              </a>
-              <a href="#" class="list-group-item list-group-item-action changeColor">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">Subheading</div>
-                  Content for list item
+                  <div class="fw-bold">New List</div>
+                    Add a new item to a list!
                 </div>
               </a>
             </div>
@@ -206,10 +231,9 @@
                 <div class="card changeColor">
                   <img src="" class="card-img-top" alt="">
                   <div class="card-body">
-                    <h5 class="card-title">New Item <i class="fa fa-plus-circle" aria-hidden="true"></i></h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="text-white btn btn-warning">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="#" class="btn btn-danger">Delete <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <h5 class="card-title">New Item</h5>
+                    <p class="card-text">Add a new item to a list!</p>
+                    <a href="newItem" class="text-white btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
