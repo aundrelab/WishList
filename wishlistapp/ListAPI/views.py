@@ -22,6 +22,29 @@ def create(request):
 
     return render(request, 'newList.html')
 
+@api_view(['POST', 'GET'])
+def update(request, listId):
+    if request.method == "POST":
+        list = List.objects.get(listId=listId)
+        serializer = ListSerializer(list, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return redirect('../../dashboard')
+
+    list = List.objects.get(listId=listId)
+    serializer = ListSerializer(list)
+    json1 = json.loads(json.dumps(serializer.data))
+    print(json1)
+    return render(request, 'editList.html', {'list': json1})
+
+@api_view(['DELETE', 'GET'])
+def delete(request, listId):
+    if request.method == 'GET':
+        list = List.objects.get(listId=listId)
+        list.delete()
+        return redirect('../../dashboard')
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['GET'])
 def getListsOfUser(request):
     if request.method == 'GET':

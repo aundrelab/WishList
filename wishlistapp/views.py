@@ -107,6 +107,7 @@ def dashboard(request):
         serializer = ItemSerializerAPI(items, many=True)
         json_items = json.loads(json.dumps(serializer.data))
         json_items.append(json_items)
+        json_items.pop()
     print('lists:', json_lists)
     print('items:', json_items)
     return render(request, 'dashboard.html', {'username': request.session['username'], 'lists': json_lists, 'items': json_items, 'idToHighlight': idToHighlight});
