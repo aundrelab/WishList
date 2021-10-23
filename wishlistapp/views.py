@@ -185,18 +185,12 @@ def login_view(request):
     return Response(data)
 
 
-@api_view(['POST',])
+@api_view(['POST','GET'])
 def logout_view(request):
-    serializer = LogoutSerializer(data=request.data)
-    data = {}
-    if serializer.is_valid():
-        del request.session['userId']
-        del request.session['username']
-        del request.session['password']
-        data['success'] = 'successfully logged out user'
-    else:
-        data = serializer.errors
-    return Response(data)
+    del request.session['userId']
+    del request.session['username']
+    del request.session['password']
+    return redirect('../')
 
 
 @api_view(['DELETE',])
